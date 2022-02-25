@@ -1,12 +1,50 @@
 from django.shortcuts import render, redirect
-from .models import Home, CvDownload , Profile, Project, Category, Skills, Social, Certificates, Flag
+from .models import Home, CvDownload , Profile, Project, Category, Skills, Social, Certificate, Flag
 import os
 from django.conf import settings
 from django.core.mail import send_mail
-
 from django.contrib import messages
-
 from django.http import HttpResponse
+
+# Internationalization
+from django.utils.translation import gettext as _
+from django.utils.translation import get_language, activate, gettext
+
+
+def index(request):
+
+    
+    # home
+    home = Home.objects.latest('updated') 
+    # About
+    profile = Profile.objects.latest('updated')
+    socials = Social.objects.all()
+    # CV Document
+    file = CvDownload.objects.all()
+    # My project
+    projects = Project.objects.all()
+    # Skills
+    categories = Category.objects.all()
+    # Certificates
+    certificates = Certificate.objects.all()
+    # Flags
+    flags = Flag.objects.all()
+
+    return render(
+        request,
+        'index.html',
+        context={
+            'home':home,
+            'profile':profile,
+            'file': file,
+            'projects':projects,
+            'socials':socials,
+            'categories':categories,
+            'certificates': certificates,
+            'flags':flags,
+        }
+    )
+
 
 def contact(request):
 
@@ -24,44 +62,6 @@ def contact(request):
     
     return render(request, "portfolio/sent_mail.html",)
 
-def index(request):
-    # home
-    home = Home.objects.latest('updated')
-
-    # About
-    profile = Profile.objects.latest('updated')
-    socials = Social.objects.all()
-    
-    # CV Document
-    file = CvDownload.objects.all()
-    
-    # My project
-    projects = Project.objects.all()
-
-    # Skills
-    categories = Category.objects.all()
-
-    # Certificates
-    certificates = Certificates.objects.all()
-
-    # Flags
-    flags = Flag.objects.all()
-
-
-    return render(
-        request,
-        'index.html',
-        context={
-            'home':home,
-            'profile':profile,
-            'file': file,
-            'projects':projects,
-            'socials':socials,
-            'categories':categories,
-            'certificates': certificates,
-            'flags':flags,
-        }
-    )
 
 def download(request, path, pk):
     file_path = os.path.join(settings.MEDIA_ROOT,path)

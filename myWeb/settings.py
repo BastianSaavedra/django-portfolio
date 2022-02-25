@@ -32,6 +32,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -40,11 +41,14 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # Applications
     'portfolio',
+    'rosetta',
+    'fontawesomefree',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -110,7 +114,10 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
 
+# LANGUAGE_CODE = 'es'
 LANGUAGE_CODE = 'es-es'
+
+# Definir los lenguajes de la aplicacion
 
 TIME_ZONE = 'America/Santiago'
 
@@ -120,6 +127,19 @@ USE_L10N = True
 
 USE_TZ = True
 
+#Internationalization Languages
+from django.utils.translation import gettext_lazy as _
+
+
+
+LANGUAGES = (
+    ('es', _('Español')),
+    ('en', _('Inglés')),
+)
+
+LOCALE_PATHS = (
+    os.path.join(BASE_DIR, 'locale/'),
+)
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
@@ -144,6 +164,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
 
 
 

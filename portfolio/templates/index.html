@@ -1,14 +1,18 @@
 {% load static %}
+{% load i18n %}
 <!DOCTYPE html>
-<html lang="es">
-    <head>
-        <title>BSaavedra</title>
+<html>
+    <head lang="{{ LANGUAGE_CODE }}">
+        <title>{{ home.name }}</title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.14.0/devicon.min.css"> 
         <link rel="stylesheet" href="{% static 'css/styles.css' %}">
         <script src="https://kit.fontawesome.com/bcbe226634.js" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}" />
+        <link href="{% static 'fontawesomefree/js/all.min.js' %}" rel="stylesheet" type="text/css" ></link>
+        <link rel="icon" href="{{ home.picture_home.url }}">
         <style>
             body {
                 overflow-x: hidden;
@@ -22,47 +26,65 @@
             .flags__item{
                 width: 30px;
             }
+            .card {
+                height: 100%;
+            }
         </style>
     </head>
 
-    <body class="bg-white">
+    <body class="bg-light">
         <!-- navbar start-->
         
-    
-
                 <nav class="navbar navbar-light fixed-top bg-primary shadow-sm">
             <div class="container-lg">
                 <a href="#" class="navbar-brand text-light fw-bold fs-4">
                     {{ home.name }}
                 </a>
                 
-                {% if flags %}
-                    {% for flag in flags %}
-                        <div id="flags" class="flags">
-                            <div class="flags__item" data-language="{{ flag.data_language }}"> 
-                                <img src="{{ flag.flag_img.url }}" alt="{{ flag.data_language }}"/>
-                            </div>
-                        </div>
-                    {% endfor %}
-                {% endif %}
-
-
                 <div class="dropdown">
-                    <!-- <button class="btn btn-secondary btn-light px-3" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false"> -->
-                    <!--     <i class="fas fa-bars"></i> -->
-                    <!-- </button> -->
-                    <!-- <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton"> -->
-                    <!--     <li><a href="#home" class="dropdown-item">Inicio</a></li> -->
-                    <!--     <li><a href="#about" class="dropdown-item">Sobre mi</a></li> -->
-                    <!--     <li><a href="#skills" class="dropdown-item">Habilidades</a></li> -->
-                    <!--     <li><a href="#portfolio" class="dropdown-item">Portafolio</a></li> -->
-                    <!--     <li><a href="#certificate" class="dropdown-item">Certificados</a></li> -->
-                    <!--     <li><a href="#contact" class="dropdown-item">Contacto</a></li> -->
-                    <!-- </ul> -->
+                    <button 
+                        class="btn btn-light text-primary " type="button" id="dropdownMenuButton" 
+                        data-bs-toggle="dropdown" aria-expanded="false" value="" style="font-size: 20px;">
+                        <i class="fas fa-language fa-lg"></i> 
+                    </button>
+
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
+
+                        {% get_current_language as LANGUAGE_CODE %}
+                        {% get_available_languages as LANGUAGES %}
+                        {% get_language_info_list for LANGUAGES as languages %}
+
+    
+                        {% for lang in languages %}
+                        <div>
+                            <li>
+                                <a class="dropdown-item" href="/{{ lang.code }}/">
+                                    <img 
+                                        width="45px" 
+                                        {% if lang.code == 'es' %} 
+                                            src="{% static '/img/spain.png' %}"
+                                        {% elif lang.code == 'en' %} 
+                                            src="{% static '/img/united.png' %}"
+                                        {% endif %} >
+                                        {% if LANGUAGE_CODE == 'es' %}
+                                            {{ lang.name_local|title }}
+                                        {% elif LANGUAGE_CODE == 'en' %}
+                                            {{ lang.name|title }}
+                                        {% endif %}
+                                </a>
+
+                            </li>
+                        </div>
+
+                        {% endfor %}
+                    </ul>
                 </div>
             </div>
         </nav>
         <!-- navbar end -->
+
+
+
 
         <!-- home section start -->
         <section class="home py-5" id="home">
@@ -75,18 +97,27 @@
                     </div>
                     <div class="col-md-6 mt-5 mt-md-0 order-md-first">
                         <div class="home-text">
-                            <p class="text-muted mb-1">Hola</p>
-                            <h1 class="text-dark text-uppercase fs-1 fw-bold">{{ home.greeting }}</h1>
-                            <h2 class="text-dark text-uppercase fs-1 fw-bold">{{ home.sub_greeting }}</h2>
-                            <h2 class="fs-4 text-dark">{{ home.name }}</h2>
-                            <p class="mt-4 text-muted"> {{ home.text }}</p>
-                            <a href="#contact" class="btn btn-info text-white px-3 mt-3">Contáctame</a>
+                            <p class="text-muted mb-1"> {% trans 'Hola' %}</p>
+                            {% if LANGUAGE_CODE == 'es' %}
+                                <h1 class="text-dark text-uppercase fs-1 fw-bold"> {{ home.greeting }}</h1>
+                                <h2 class="text-dark text-uppercase fs-1 fw-bold">{{ home.sub_greeting }}</h2>
+                                <h2 class="fs-4 text-dark">{{ home.name }}</h2>
+                                <p class="mt-4 text-muted"> {{ home.text }}</p>
+                            {% elif LANGUAGE_CODE == 'en'%}
+                                <h1 class="text-dark text-uppercase fs-1 fw-bold"> {{ home.greeting_en }}</h1>
+                                <h2 class="text-dark text-uppercase fs-1 fw-bold">{{ home.sub_greeting_en }}</h2>
+                                <h2 class="fs-4 text-dark">{{ home.name }}</h2>
+                                <p class="mt-4 text-muted"> {{ home.text_en }}</p>
+                            {% endif %}
+
+                            <a href="#contact" class="btn btn-info text-white px-3 mt-3"> {% trans 'Contáctame'%} </a>
                         </div>
                     </div>
                 </div>     
             </div>
         </section>
         <!-- home section end -->
+
 
         <!-- about me section start -->
         <section class="about py-5" id="about">
@@ -95,7 +126,7 @@
                 <div class="row justify-content-center pt-5 d-flex">
                     <div class="col-lg-8 ">
                         <div class="section-title text-center ">
-                            <h2 class="fw-bold ">Acerca de mi</h2>
+                            <h2 class="fw-bold ">{% trans 'Acerca de Mi' %}</h2>
                         </div>
                     </div>
                 </div>
@@ -113,14 +144,16 @@
                     
                     <!-- div class="row"-->
                     <div class="col-md-6 mb-5 mt-md-0 order-md-first pb-5 ">
-
                         <div class="about-text text-center mt-5">
-                            <h3 class="fs-4">{{ profile.career }}</h3>
-                            <p class="text-muted">{{ profile.description }}</p>
-
-                       
+                            {% if LANGUAGE_CODE == 'es' %}
+                                <h3 class="fs-4">{{ profile.career }}</h3>
+                                <p class="text-muted">{{ profile.description }}</p>
+                            {% elif LANGUAGE_CODE == 'en' %}
+                                <h3 class="fs-4">{{ profile.career_en }}</h3>
+                                <p class="text-muted">{{ profile.description_en }}</p>
+                            {% endif %}
                             {% for post in file %}
-                            <a href="{{ post.cv_portfolio.url }}" download="{{ post.cv_portfolio.url }}" class="btn px-3  btn-info text-white me-5">Descargar CV</a>
+                            <a href="{{ post.cv_portfolio.url }}" download="{{ post.cv_portfolio.url }}" class="btn px-3  btn-info text-white me-5">{% trans 'Descargar CV' %}</a>
                             {% endfor %}
 
                             {% if socials %}
@@ -129,11 +162,13 @@
                                     {% endfor %}
                                 {% else %}
                                     <div class="alert alert-danger" role="alert">
-                                        No hay redes sociales para mostrar
+                                        {% trans 'No hay redes sociales para mostrar' %}
                                     </div>
                                 {% endif %}
                         </div>
                     </div>
+
+
                 </div>
             </div>
         </section>
@@ -146,28 +181,24 @@
             <div class="row justify-content-center pb-3">
                 <div class="col-lg-8">
                     <div class="section-title text-center">
-                        <h2 class="fw-bold mb-3 pt-3">Mis Habilidades y Herramientas</h2>
-                        <h5 class="">Aquí se encontraran mis habilidad, herramientas y tecnologias que utilizo.</h5>
+                        <h2 class="fw-bold mb-3 pt-3">{% trans 'Mis Habilidades y Herramientas' %}</h2>
+                        <h5 class="">{% trans 'Aquí se encontraran mis habilidad, herramientas y tecnologias que utilizo.' %}</h5>
                     </div>        
                 </div>
             </div>
-
-
-            
- 
 
             <div class="container-lg py-4">
                 <div class="row row-cols-md-1">
                     {% if categories %}
                         {% for category in categories %}
                             <div class="col justify-content-center text-center">
-                                <h3>{{ category.name }}</h3>
+                                <h3>{% if LANGUAGE_CODE == 'es' %}{{ category.name }}{% elif LANGUAGE_CODE == 'en' %}{{ category.name_en }}{% endif %}</h3>
                                 {% for skills in category.skills_set.all %}
                                     <div class="skill-item mt-3  mb-4 text-center fs-5 d-inline-flex flex-wrap">
                                             <div class=" mb-4 " >
                                                 {% if skills.icon_name is null  %}
-                                                <div class="d-md-inline-flex justify-content">
-                                                    <img style="width: 75px; height: 75px;"  src={{ skills.icon_img.url }} alt="icon img"/>
+                                                <div class="d-md-inline-flex">
+                                                    <img style="width: 75px; height: 75px;" class="mx-auto"  src={{ skills.icon_img.url }} alt="icon img"/>
                                                 </div>
 
                                                 {% else %}
@@ -185,7 +216,7 @@
                         {% endfor %}
                     {% else %}
                         <div class="alert alert-danger" role="alert">
-                            No se encuentran habilidades, tecnologias o herramientras disponibles para mostrar
+                            {% trans 'No se encuentran habilidades, tecnologias o herramientras disponibles para mostrar.' %}
                         </div>
                     {% endif %}
 
@@ -196,13 +227,17 @@
 
         <!-- Skills section end -->
 
+            
+
+
+
         <!-- Portfolio Section start -->
         <section class="album py-5" id="portfolio">
             <div class="container-lg py-4 pb-3">
                 <div class="row justify-content-center">
                     <div class="col-lg-8">
                         <div class="section-title text-center">
-                            <h2 class="fw-bold mb-5">Mis Trabajos</h2>
+                            <h2 class="fw-bold mb-5">{% trans 'Mis Trabajos' %}</h2>
                         </div>
                     </div>
                 </div>
@@ -213,28 +248,34 @@
                             <div class="col">
                                 <div class="card border-primary">
                                     <div class="card-body">
-                                        <h5 class="card-title">{{ project.title }}</h5>
-                                        <p class="card-text">{{ project.description }}</p>
+                                        {% if LANGUAGE_CODE == 'es' %}
+                                            <h5 class="card-title">{{ project.title }}</h5>
+                                            <p class="card-text">{{ project.description }}</p>
+                                        {% elif LANGUAGE_CODE == 'en' %}
+                                            <h5 class="card-title">{{ project.title_en }}</h5>
+                                            <p class="card-text">{{ project.description_en }}</p>
+                                        {% endif %}
+
+                                    </div>
                                         {% if project.link is null %}
-                                            <p class="mb-4">
+                                            <p class="mb-4 mx-auto">
                                                 <a class="text-primary text-decoration-none" href="{{ project.exe.url }}" download="{{ project.exe.url }}">
-                                                    Descarga Aquí
+                                                    {% trans 'Descarga Aquí' %}
                                                 </a>
                                             </p>
                                         {% else %}
-                                            <p class="mb-4">
+                                            <p class="mb-4 mx-auto">
                                                 <a class="text-primary text-decoration-none" target="_blank" href="{{ project.link }}">
-                                                    Link Aquí
+                                                    {% trans 'Link Aquí' %}
                                                 </a>
                                             </p>
                                         {% endif%}
-                                    </div>
                                 </div>
                             </div>
                         {% endfor %}
                     {% else %}
                         <div class="alert alert-danger" role="alert">
-                            No se encuentran proyectos disponibles para mostrar
+                            {% trans 'No se encuentran proyectos disponibles para mostrar' %}
                         </div>
                     {% endif %}
                 </div>               
@@ -250,7 +291,7 @@
                 <div class="row justify-content-center">
                     <div class="col-lg-8">
                         <div class="section-title text-center">
-                            <h2 class="fw-bold mb-5">Mis Certificados</h2>
+                            <h2 class="fw-bold mb-5">{% trans 'Mis Certificados' %}</h2>
                         </div>
                     </div>
                 </div>
@@ -265,16 +306,20 @@
                                         <p class="card-text">
                                             {{ certificate.date }}
                                             </br>
-                                            <text class="text-muted">ID de la credencial: {{ certificate.id_credencial }}</text>
+                                            <text class="text-muted">{% trans 'ID de la credencial:' %} {{ certificate.id_credencial }}</text>
                                         </p>
-                                        <a class="btn btn-info text-white" target="_blank" href={{ certificate.url_credencial }}>Ver Credencial</a></p>
+
+
                                     </div>
+                                        <a class="btn btn-info text-white mx-auto" target="_blank" href={{ certificate.url_credencial }}>{% trans 'Ver Credencial' %}</a></p>
+
+
                                 </div>
                             </div>
                         {% endfor %}
                     {% else %}
                         <div class="alert alert-danger" role="alert">
-                            No se encuentras certificados disponibles para mostrar
+                            {% trans 'No se encuentras certificados disponibles para mostrar' %}
                         </div>
                     {% endif %}
                 </div>
@@ -291,7 +336,7 @@
         <div class="row justify-content-center">
             <div class="col-lg-8">
                 <div class="section-title text-center">
-                    <h2 class="fw-bold mb-5">Contáctame</h2>
+                    <h2 class="fw-bold mb-5">{% trans 'Contáctame' %}</h2>
                 </div>
             </div>
         </div>
@@ -303,47 +348,48 @@
                       <i class="fas fa-envelope"></i>
                    </div>
                    <div class="text ms-3">
-                      <h3 class="fs-5">Email</h3>
-                      <p class="text-muted">{{ profile.personal_email}}</p>
+                        <h3 class="fs-5">{% trans 'Email' %}</h3>
+                        <p class="text-muted">{{ profile.personal_email}}</p>
                    </div>
                 </div>
 
 
                 <div class="contact-item d-flex mb-3">
                    <div class="icon fs-4 text-info">
-                      <i class="fas fa-map-marker-alt"></i>
+                        <i class="fas fa-map-marker-alt"></i>
                    </div>
                    <div class="text ms-3">
-                      <h3 class="fs-5">Ubicación</h3>
-                      <p class="text-muted">{{ profile.ubication }}</p>
+                        <h3 class="fs-5">{% trans 'Ubicación' %}</h3>
+                        <p class="text-muted">{{ profile.ubication }}</p>
                    </div>
                 </div>
             </div>
             <div class="col-md-7">
                 <div class="contact-form">
-                   <form class="contact-form" method="POST" action="{% url 'contact' %}">
+                   <form class="contact-form needs-validation" method="POST" action="{% url 'contact' %}">
                         {% csrf_token %}
                         <div class="row">
                             <div class="col-lg-6 mb-4">
-                                <input name="name" type="text" placeholder="Tu nombre" class="form-control form-control-lg fs-6 border border-primary shadow-sm">
+                                <input name="name" type="text" required placeholder="{% trans 'Tu nombre' %}" class="form-control form-control-lg fs-6 border border-primary shadow-sm">
                             </div>
                             <div class="col-lg-6 mb-4">
-                                <input name="email" type="text" placeholder="Tu email" class="form-control form-control-lg fs-6 border border-primary shadow-sm">
+                                <input name="email" id="email" type="email" required placeholder="{% trans 'Tu email' %}" class="form-control form-control-lg fs-6 border border-primary shadow-sm">
+                                
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-lg-12 mb-4">
-                                <input  name="subject" type="text" placeholder="Asunto" class="form-control form-control-lg fs-6 border border-primary shadow-sm">
+                                <input  name="subject" type="text" required placeholder="{% trans 'Asunto' %}" class="form-control form-control-lg fs-6 border border-primary shadow-sm">
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-lg-12 mb-4">
-                                <textarea name="message" rows="5" placeholder="Tu mensaje" class="form-control form-control-lg fs-6 border border-primary shadow-sm"></textarea>
+                                <textarea name="message" rows="5" required placeholder="{% trans 'Tu mensaje' %}" class="form-control form-control-lg fs-6 border border-primary shadow-sm"></textarea>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-lg-12">
-                                <button type="submit" class="btn btn-info text-white px-3">Enviar mensaje</button>
+                                <button type="submit"  class="btn btn-info text-white px-3">{% trans 'Enviar mensaje' %}</button>
                             </div>
                         </div>
                    </form>
@@ -359,27 +405,59 @@
             <div class="container-lg">
                 <div class="row">
                     <div class="col-lg-12">
-                        <p class="m-0 text-center text-muted">Hecho con ❤️ por Bastian Saavedra</p>
+                        <p class="m-0 text-center text-muted">{% trans 'Hecho con ❤️ por Bastian Saavedra' %} </p>
                     </div>
                 </div>
             </div>
         </footer>
         <!-- footer end -->
-  
 
         <!-- js scripts -->
         <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
         <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+        <script type="text/javascript">
+            // Example starter JavaScript for disabling form submissions if there are invalid fields
+            (function () {
+              'use strict'
+
+              // Fetch all the forms we want to apply custom Bootstrap validation styles to
+              var forms = document.querySelectorAll('.needs-validation')
+
+              // Loop over them and prevent submission
+              Array.prototype.slice.call(forms)
+                .forEach(function (form) {
+                  form.addEventListener('submit', function (event) {
+                    if (!form.checkValidity()) {
+                      event.preventDefault()
+                      event.stopPropagation()
+                    }
+
+                    form.classList.add('was-validated')
+                  }, false)
+                })
+            })()
+        </script>
+
         {% if messages %}
             {% for m in messages %}
-                <script type="text/javascript">
-                    Swal.fire({
-                        "title": "Felicitaciones",
-                        "text": "{{ m }}",
-                        "icon": "success"
-                    })
-                </script>
+                {% if LANGUAGE_CODE == 'es' %}
+                    <script type="text/javascript">
+                        Swal.fire({
+                            "title": "Felicitaciones",
+                            "text": "{{ m }}",
+                            "icon": "success"
+                        })
+                    </script>
+                {% elif LANGUAGE_CODE == 'en' %}
+                    <script type="text/javascript">
+                        Swal.fire({
+                            "title": "Congratulations",
+                            "text": "Your messages has been sent",
+                            "icon": "success"
+                        })
+                    </script>
+                {% endif %}
             {% endfor %}
         {% endif %}
     </body>

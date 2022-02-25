@@ -1,0 +1,139 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# 
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-02-23 20:44-0300\n"
+"PO-Revision-Date: 2022-02-23 11:19-0443\n"
+"Last-Translator:   <bastiansaavedra55@gmail.com>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Translated-Using: django-rosetta 0.9.8\n"
+
+#: .\myWeb\settings.py:136
+msgid "Español"
+msgstr "Spanish"
+
+#: .\myWeb\settings.py:137
+msgid "Inglés"
+msgstr "English"
+
+#: .\myWeb\urls.py:27
+msgid "admin/"
+msgstr ""
+
+#: .\portfolio\templates\index.html:40
+msgid "Idiomas"
+msgstr "Languages"
+
+#: .\portfolio\templates\index.html:85
+msgid "Hola"
+msgstr "Hi"
+
+#: .\portfolio\templates\index.html:98 .\portfolio\templates\index.html:311
+msgid "Contáctame"
+msgstr "Contact me"
+
+#: .\portfolio\templates\index.html:115
+msgid "Acerca de Mi"
+msgstr "About Me"
+
+#: .\portfolio\templates\index.html:142
+msgid "Descargar CV"
+msgstr "Download CV"
+
+#: .\portfolio\templates\index.html:151
+msgid "No hay redes sociales para mostrar"
+msgstr "No social networks to show"
+
+#: .\portfolio\templates\index.html:170
+msgid "Mis Habilidades y Herramientas"
+msgstr "My Skills and Tools"
+
+#: .\portfolio\templates\index.html:171
+msgid ""
+"Aquí se encontraran mis habilidad, herramientas y tecnologias que utilizo."
+msgstr "Here you will find my skills, tools and technologies I use."
+
+#: .\portfolio\templates\index.html:205
+msgid ""
+"No se encuentran habilidades, tecnologias o herramientras disponibles para "
+"mostrar."
+msgstr " No skills, technologies or tools available to show"
+
+#: .\portfolio\templates\index.html:222
+msgid "Mis Trabajos"
+msgstr "Works"
+
+#: .\portfolio\templates\index.html:238
+msgid "Descarga Aquí"
+msgstr "Download Here"
+
+#: .\portfolio\templates\index.html:244
+msgid "Link Aquí"
+msgstr "Link Here"
+
+#: .\portfolio\templates\index.html:254
+msgid "No se encuentran proyectos disponibles para mostrar"
+msgstr "There are not projects available to show"
+
+#: .\portfolio\templates\index.html:270
+msgid "Mis Certificados"
+msgstr "My Certificates"
+
+#: .\portfolio\templates\index.html:285
+msgid "ID de la credencial:"
+msgstr "Credetila ID:"
+
+#: .\portfolio\templates\index.html:287
+msgid "Ver Credencial"
+msgstr "See Credential"
+
+#: .\portfolio\templates\index.html:294
+msgid "No se encuentras certificados disponibles para mostrar"
+msgstr "There are not certificates available to show"
+
+#: .\portfolio\templates\index.html:323
+msgid "Email"
+msgstr "Mail"
+
+#: .\portfolio\templates\index.html:334
+msgid "Ubicación"
+msgstr "Location"
+
+#: .\portfolio\templates\index.html:345
+msgid "Tu nombre"
+msgstr "Your name"
+
+#: .\portfolio\templates\index.html:348
+msgid "Tu email"
+msgstr "Your mail"
+
+#: .\portfolio\templates\index.html:353
+msgid "Asunto"
+msgstr "Subject"
+
+#: .\portfolio\templates\index.html:358
+msgid "Tu mensaje"
+msgstr "Your message"
+
+#: .\portfolio\templates\index.html:363
+msgid "Enviar mensaje"
+msgstr "Send message"
+
+#: .\portfolio\templates\index.html:379
+msgid "Hecho con ❤️ por Bastian Saavedra"
+msgstr "Made with ❤️  by Bastian Saavedra"
+
+#, fuzzy
+#~ msgid " %(home.greeting)s "
+#~ msgstr "Welcome"
