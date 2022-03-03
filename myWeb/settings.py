@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 import os
 from decouple import config
 from pathlib import Path
+import django_heroku
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -26,7 +27,7 @@ SECRET_KEY = config("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["bastian-saavedra.herokuapp.com"]
 
 
 # Application definition
@@ -84,10 +85,10 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'myweb',
-        'USER': config('DATABASE_USER'),
-        'PASSWORD': config('DATABASE_PASSWORD'),
-        'HOST': 'localhost',
-        'PORT': '',
+        'USER': 'ekftfxdqknvwfm',
+        'PASSWORD': '59f95cb562206334d814b6235c8faf8086deeecebe73a527b727b3c62e0a893e',
+        'HOST': 'ec2-44-192-245-97.compute-1.amazonaws.com',
+        'PORT': '5432'
     }
 }
 
@@ -144,15 +145,19 @@ LOCALE_PATHS = (
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
-STATIC_URL = '/static/'
+# STATIC_URL = '/static/'
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_URL = "/static/"
+
 
 # Coneccion to email server
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 EMAIL_HOST = 'smtp.googlemail.com'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
-EMAIL_HOST_USER = config("EMAIL_MAIL_USER")
-EMAIL_HOST_PASSWORD = config("EMAIL_MAIL_PASSWORD")
+EMAIL_MAIL_USER = 'mywebsitebsaavedra@gmail.com'
+EMAIL_MAIL_PASSWORD = 'fq3TjnvrMdyf'
 
 
 # Default primary key field type
@@ -165,7 +170,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-
+django_heroku.settings(locals())
 
 
 
